@@ -1,0 +1,20 @@
+void automation.Update_Contact(String contactId)
+{
+contact = zoho.crm.getRecordById("Contacts",contactId.toLong());
+email = contact.get("Email");
+phone = contact.get("Phone");
+updateMap = Map();
+if(email != null && email != "")
+{
+	updateMap.put("Secondary_Email",email);
+}
+if(phone != null && phone != "")
+{
+	updateMap.put("Mobile",phone);
+}
+if(updateMap.size() > 0)
+{
+	resp = zoho.crm.updateRecord("Contacts",contactId.toLong(),updateMap);
+	info resp;
+}
+}

@@ -1,0 +1,15 @@
+void automation.After_Discount_Calculate(String contactId)
+{
+contact = zoho.crm.getRecordById("Contacts",contactId.toLong());
+info "FULL RECORD: " + contact;
+amount = ifnull(contact.get("Currency_Amount"),0).toDecimal();
+discount = ifnull(contact.get("Discount"),0).toDecimal();
+info "amount: " + amount + " | discount: " + discount;
+finalAmount = amount - amount * discount / 100;
+info "final: " + finalAmount;
+updateMap = Map();
+updateMap.put("After_Discount_Amount",finalAmount);
+// out
+resp = zoho.crm.updateRecord("Contacts",contactId.toLong(),updateMap);
+info "UPDATE RESPONSE: " + resp;
+}

@@ -1,0 +1,21 @@
+void automation.Send_Contact_Post(String contactId)
+{
+contact = zoho.crm.getRecordById("Contacts",contactId.toLong());
+bodyMap = Map();
+bodyMap.put("firstName",contact.get("First_Name"));
+bodyMap.put("lastName",contact.get("Last_Name"));
+bodyMap.put("email",contact.get("Email"));
+bodyMap.put("phone",contact.get("Phone"));
+// 3. Header
+headerMap = Map();
+headerMap.put("Content-Type","application/json");
+// 4. POST call
+response = invokeurl
+[
+	url :"https://dummyjson.com/users/add"
+	type :POST
+	parameters:bodyMap.toString()
+	headers:headerMap
+];
+info "POST RESPONSE: " + response;
+}

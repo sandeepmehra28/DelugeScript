@@ -1,0 +1,21 @@
+void automation.Create_Contact(String first_name,String Last_Name,String department,String email,String phone)
+{
+// ye to hai data statically input karna 
+//   contactMap = map();
+//   contactMap.put("Department", "IT");
+//   contactMap.put("First_Name", "sandeep");
+//   contactMap.put("Last_Name", "mehra");
+//   contactMap.put("Email", "sandeepmehra8242@gmail.com");
+//   contactMap.put("Phone", "9870550873");
+//   resp = zoho.crm.createRecord("Contacts", contactMap);
+//   info resp;
+//dynamically data create karna 
+conMap = Map();
+conMap.put("First_Name",first_name);
+conMap.put("Last_Name",Last_Name);
+conMap.put("Department",department);
+conMap.put("Email",email);
+conMap.put("Phone",phone);
+resp = zoho.crm.createRecord("Contacts",conMap,{"trigger":{"workflow"}});
+info resp;
+}

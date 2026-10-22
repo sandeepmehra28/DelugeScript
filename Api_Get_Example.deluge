@@ -1,0 +1,23 @@
+void automation.Api_Get_Example()
+{
+response = invokeurl
+[
+	url :"https://dummyjson.com/users"
+	type :GET
+];
+userList = response.get("users");
+user = userList.get(6);
+conMap = Map();
+conMap.put("First_Name",user.get("firstName"));
+conMap.put("Last_Name",user.get("lastName"));
+conMap.put("Email",user.get("email"));
+conMap.put("Phone",user.get("phone"));
+// Date ko yyyy-MM-dd format 
+dob = user.get("birthDate");
+if(dob != null && dob != "")
+{
+	conMap.put("Date_of_Birth",dob.toDate().toString("yyyy-MM-dd"));
+}
+res = zoho.crm.createRecord("Contacts",conMap,{"trigger":{"workflow"}});
+info res;
+}

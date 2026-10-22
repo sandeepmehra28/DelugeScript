@@ -1,0 +1,23 @@
+void automation.Calculate_Age(String contactId)
+{
+contact = zoho.crm.getRecordById("Contacts",contactId.toLong());
+dob = contact.get("Date_of_Birth");
+info "DOB: " + dob;
+if(dob != null && dob != "")
+{
+	dobDate = dob.toDate();
+	today = zoho.currentdate;
+	// Saalon ka fark
+	age = today.year() - dobDate.year();
+	// Agar is saal ka birthday abhi nahi aaya to 1 kam karo
+	if(today.month() < dobDate.month() || today.month() == dobDate.month() && today.day() < dobDate.day())
+	{
+		age = age - 1;
+	}
+	info "AGE: " + age;
+	updateMap = Map();
+	updateMap.put("AGE",age);
+	resp = zoho.crm.updateRecord("Contacts",contactId.toLong(),updateMap);
+	info resp;
+}
+}

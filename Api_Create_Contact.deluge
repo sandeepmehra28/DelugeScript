@@ -1,0 +1,35 @@
+void automation.Api_Create_Contact()
+{
+// 1. API call
+response = invokeurl
+[
+	url :"https://dummyjson.com/users?limit=1"
+	type :GET
+];
+user = response.get("users").get(0);
+info user;
+email = user.get("email");
+// 2. Duplicate check
+existing = zoho.crm.searchRecords("Contacts","(Email:equals:" + email + ")");
+if(existing.size() == 0)
+{
+	conMap = Map();
+	conMap.put("First_Name",user.get("firstName"));
+	conMap.put("Last_Name",user.get("lastName"));
+	conMap.put("Email",email);
+	conMap.put("Phone",user.get("phone").replaceAll("[^0-9+]",""));
+	// 3. DOB (agar chahiye)
+	dob = user.get("birthDate");
+	if(dob != null && dob != "")
+	{
+		conMap.put("Date_of_Birth",dob.toDate().toString("yyyy-MM-dd"));
+	}
+	// 4. Contact create
+	res = zoho.crm.createRecord("Contacts",conMap);
+	info res;
+}
+else
+{
+	info "Contact already hai: " + email;
+}
+}
