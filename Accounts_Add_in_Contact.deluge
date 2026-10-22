@@ -1,0 +1,7 @@
+void automation.Accounts_Add_in_Contact(String contactId,String accountId)
+{
+updateMap = Map();
+updateMap.put("Account_Name",{"id":accountId});
+resp = zoho.crm.updateRecord("Contacts",contactId,updateMap);
+info resp;
+}
